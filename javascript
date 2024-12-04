@@ -1,39 +1,66 @@
 let cart = [];
-let products = [
-    { id: 1, name: "Product 1", price: 10 },
-    { id: 2, name: "Product 2", price: 15 },
-    { id: 3, name: "Product 3", price: 20 }
-];
+const shippingCost = 5;
 
 function addToCart(id) {
-    let product = products.find(item => item.id === id);
-    cart.push(product);
+    const productElement = document.querySelector(`.product[data-id="${id}"]`);
+    const name = productElement.dataset.name;
+    const price = parseFloat(productElement.dataset.price);
+    const image = productElement.dataset.image;
+
+    const existingItem = cart.find(item => item.id === id);
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({ id, name, price, image, quantity: 1 });
+    }
+
     updateCart();
 }
 
 function updateCart() {
-    document.getElementById("cart-count").innerText = cart.length;
-    let cartItems = document.getElementById("cart-items");
-    cartItems.innerHTML = "";
-    let total = 0;
+    const cartItemsContainer = document.getElementById("cart-items");
+    cartItemsContainer.innerHTML = "";
+
+    let subtotal = 0;
+
     cart.forEach((item, index) => {
-        let li = document.createElement("li");
-        li.innerText = `${item.name} - $${item.price}`;
-        cartItems.appendChild(li);
-        total += item.price;
+        subtotal += item.price * item.quantity;
+
+        const itemElement = document.createElement("div");
+        itemElement.classList.add("cart-item");
+
+        itemElement.innerHTML = `
+            <img src="${item.image}" alt="${item.name}">
+            <div>
+                <p>${item.name}</p>
+                <p>$${item.price} × ${item.quantity}</p>
+            </div>
+            <button onclick="removeFromCart(${index})">Eltávolítás</button>
+        `;
+
+        cartItemsContainer.appendChild(itemElement);
     });
-    document.getElementById("total-price").innerText = total;
+
+    document.getElementById("subtotal").innerText = subtotal.toFixed(2);
+    document.getElementById("total-price").innerText = (subtotal + shippingCost).toFixed(2);
+    document.getElementById("cart-count").innerText = cart.reduce((sum, item) => sum + item.quantity, 0);
+}
+
+function removeFromCart(index) {
+    cart.splice(index, 1);
+    updateCart();
 }
 
 function toggleCart() {
-    let modal = document.getElementById("cart-modal");
+    const modal = document.getElementById("cart-modal");
     modal.style.display = modal.style.display === "block" ? "none" : "block";
 }
 
 document.getElementById("cart-button").addEventListener("click", toggleCart);
-window.onclick = function(event) {
-    let modal = document.getElementById("cart-modal");
+window.onclick = function (event) {
+    const modal = document.getElementById("cart-modal");
     if (event.target === modal) {
         modal.style.display = "none";
     }
 };
+
