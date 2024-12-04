@@ -3,41 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple E-Commerce</title>
+    <title>SunPack Innovations</title>
     <link rel="stylesheet" href="webshop.css">
 </head>
 <body>
-
     <header>
-        <h1>Simple E-Commerce</h1>
-        <button id="cart-button">Cart (<span id="cart-count">0</span>)</button>
+        <h1>SunPack Innovations</h1>
+        <button id="cart-button">Kosár (<span id="cart-count">0</span>)</button>
     </header>
 
     <section id="products">
-        <h2>Products</h2>
-        <div class="product" data-id="1" data-name="Product 1" data-price="10">
-            <h3>Product 1</h3>
-            <p>Price: $10</p>
-            <button onclick="addToCart(1)">Add to Cart</button>
+        <h2>Termékek</h2>
+        <div class="product" data-id="1" data-name="Product 1" data-price="10" data-image="img/product1.jpg">
+            <img src="img/product1.jpg" alt="Product 1">
+            <h3>1. termék</h3>
+            <p>Ár: $10</p>
+            <button onclick="addToCart(1)">kosárba</button>
         </div>
-        <div class="product" data-id="2" data-name="Product 2" data-price="15">
-            <h3>Product 2</h3>
-            <p>Price: $15</p>
-            <button onclick="addToCart(2)">Add to Cart</button>
+        <div class="product" data-id="2" data-name="Product 2" data-price="15" data-image="img/product2.jpg">
+            <img src="táska.png" alt="Product 2">
+            <h3>2. termék</h3>
+            <p>Ár: $15</p>
+            <button onclick="addToCart(2)">Kosárba</button>
         </div>
-        <div class="product" data-id="3" data-name="Product 3" data-price="20">
-            <h3>Product 3</h3>
-            <p>Price: $20</p>
-            <button onclick="addToCart(3)">Add to Cart</button>
+        <div class="product" data-id="3" data-name="Product 3" data-price="20" data-image="img/product3.jpg">
+            <img src="img/product3.jpg" alt="Product 3">
+            <h3>3. termék</h3>
+            <p>Ár: $20</p>
+            <button onclick="addToCart(3)">Kosárba</button>
         </div>
     </section>
 
     <div id="cart-modal" class="modal">
         <div class="modal-content">
             <span class="close-button" onclick="toggleCart()">×</span>
-            <h2>Shopping Cart</h2>
-            <ul id="cart-items"></ul>
-            <p>Total: $<span id="total-price">0</span></p>
+            <h2>Kosár</h2>
+            <div id="cart-items"></div>
+            <p><strong>Részösszeg:</strong> $<span id="subtotal">0</span></p>
+            <p><strong>Szállítás:</strong> $<span id="shipping-cost">5</span></p>
+            <p><strong>Teljes összeg:</strong> $<span id="total-price">0</span></p>
+            <button id="checkout-button">Tovább a fizetéshez</button>
         </div>
     </div>
 
